@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "adaptive-woa-offloading"
+version = "0.1.0"
+description = "An adaptive Whales Optimization Algorithm (WOA) for making offloading decisions"
+authors = ["Arcas Gabriel-Ioan <gabriel.arcas@ro.bosch.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+swarmlib = "^0.14.1"
+matplotlib = "3.5.0"
+pyvis = "^0.3.2"
+
+[tool.poetry.group.dev.dependencies]
+swarmlib = "^0.14.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
