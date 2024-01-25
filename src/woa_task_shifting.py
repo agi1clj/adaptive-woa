@@ -105,7 +105,7 @@ def load_task_shifting_data(file_path):
 
 def main():
     # Load task shifting data
-    task_shifting_data = load_task_shifting_data("static/dag_model.json")
+    task_shifting_data = load_task_shifting_data("docs/dag_model.json")
 
     # Extract necessary information from the loaded data
     n_tasks = len(task_shifting_data["nodes"])
@@ -127,13 +127,13 @@ def main():
 
     # Visualization purposes
     # You can access them all via object "history" like this:
-    model.history.save_global_objectives_chart(filename="static/algo/goc")
-    model.history.save_local_objectives_chart(filename="static/algo/loc")
-    model.history.save_global_best_fitness_chart(filename="static/algo/gbfc")
-    model.history.save_local_best_fitness_chart(filename="static/algo/lbfc")
-    model.history.save_runtime_chart(filename="static/algo/rtc")
-    model.history.save_exploration_exploitation_chart(filename="static/algo/eec")
-    model.history.save_diversity_chart(filename="static/algo/dc")
+    model.history.save_global_objectives_chart(filename="docs/algo/goc")
+    model.history.save_local_objectives_chart(filename="docs/algo/loc")
+    model.history.save_global_best_fitness_chart(filename="docs/algo/gbfc")
+    model.history.save_local_best_fitness_chart(filename="docs/algo/lbfc")
+    model.history.save_runtime_chart(filename="docs/algo/rtc")
+    model.history.save_exploration_exploitation_chart(filename="docs/algo/eec")
+    model.history.save_diversity_chart(filename="docs/algo/dc")
 
     # Print results
     best_solution = task_shifting_problem_multi.decode_solution(model.g_best.solution)

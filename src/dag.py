@@ -132,10 +132,10 @@ for node, properties in node_properties.items():
 for edge in dag.edges:
     g.add_edge(edge[0], edge[1])
 
-g.show("static/dag.html")
+g.show("docs/dag.html")
 # Export the DAG to JSON format
 dag_json = nx.node_link_data(dag)
 
 # Save the JSON to a file
-with open("static/dag_model.json", "w") as json_file:
+with open("docs/dag_model.json", "w") as json_file:
     json.dump(dag_json, json_file)
