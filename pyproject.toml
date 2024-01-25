@@ -15,6 +15,7 @@ mealpy = "^3.0.1"
 
 [tool.poetry.group.dev.dependencies]
 swarmlib = "^0.14.1"
+black = "^23.12.1"
 
 [build-system]
 requires = ["poetry-core"]
