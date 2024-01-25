@@ -11,6 +11,7 @@ python = "^3.9"
 swarmlib = "^0.14.1"
 matplotlib = "3.5.0"
 pyvis = "^0.3.2"
+mealpy = "^3.0.1"
 
 [tool.poetry.group.dev.dependencies]
 swarmlib = "^0.14.1"

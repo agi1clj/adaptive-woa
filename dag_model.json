@@ -1,0 +1,261 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "id": 0,
+      "computational_requirements": {
+        "CPU": 0.20457854111105409,
+        "GPU": 0.0022921342864054006,
+        "memory": 4.675817785269448
+      },
+      "execution_time": 0.615731179922701,
+      "priority": 3,
+      "dependencies": [],
+      "location": "FogNode",
+      "energy_consumption": 13.471911886684472
+    },
+    {
+      "id": 1,
+      "computational_requirements": {
+        "CPU": 0.42728899661045094,
+        "GPU": 0.39828065785223854,
+        "memory": 1.5364728840731887
+      },
+      "execution_time": 3.3252744835136943,
+      "priority": 3,
+      "dependencies": [],
+      "location": "EdgeServer",
+      "energy_consumption": 11.296843678837156
+    },
+    {
+      "id": 2,
+      "computational_requirements": {
+        "CPU": 0.8195858464700916,
+        "GPU": 0.3622171087698944,
+        "memory": 5.0532604043396185
+      },
+      "execution_time": 7.456756232601472,
+      "priority": 2,
+      "dependencies": [
+        1
+      ],
+      "location": "EdgeServer",
+      "energy_consumption": 46.59790784623476
+    },
+    {
+      "id": 3,
+      "computational_requirements": {
+        "CPU": 0.39941425724325824,
+        "GPU": 0.05436936336686149,
+        "memory": 3.9405924605894542
+      },
+      "execution_time": 9.885462530450564,
+      "priority": 2,
+      "dependencies": [
+        2,
+        0,
+        1
+      ],
+      "location": "Cloud",
+      "energy_consumption": 8.860278738257358
+    },
+    {
+      "id": 4,
+      "computational_requirements": {
+        "CPU": 0.4257937788622701,
+        "GPU": 0.1720552664888374,
+        "memory": 1.036820320940464
+      },
+      "execution_time": 1.0343425887792115,
+      "priority": 1,
+      "dependencies": [
+        0,
+        3,
+        2
+      ],
+      "location": "EdgeServer",
+      "energy_consumption": 17.697180947079342
+    },
+    {
+      "id": 5,
+      "computational_requirements": {
+        "CPU": 0.38330738948687276,
+        "GPU": 0.004015783411087659,
+        "memory": 6.711398419039113
+      },
+      "execution_time": 3.4999535238037334,
+      "priority": 2,
+      "dependencies": [
+        4,
+        0,
+        2
+      ],
+      "location": "Cloud",
+      "energy_consumption": 8.70919228911274
+    },
+    {
+      "id": 6,
+      "computational_requirements": {
+        "CPU": 0.5542907767882209,
+        "GPU": 0.43095741023909534,
+        "memory": 1.250700884535843
+      },
+      "execution_time": 5.109494951312456,
+      "priority": 2,
+      "dependencies": [],
+      "location": "Cloud",
+      "energy_consumption": 37.07044262269941
+    },
+    {
+      "id": 7,
+      "computational_requirements": {
+        "CPU": 0.47863060240995936,
+        "GPU": 0.37970916836937013,
+        "memory": 6.351385757724754
+      },
+      "execution_time": 7.051606870053022,
+      "priority": 4,
+      "dependencies": [
+        1,
+        4,
+        0
+      ],
+      "location": "EdgeServer",
+      "energy_consumption": 9.668199294984941
+    },
+    {
+      "id": 8,
+      "computational_requirements": {
+        "CPU": 0.6491799245322714,
+        "GPU": 0.174808102618284,
+        "memory": 1.058962161652655
+      },
+      "execution_time": 8.683496525016158,
+      "priority": 2,
+      "dependencies": [
+        1
+      ],
+      "location": "FogNode",
+      "energy_consumption": 11.46790200559169
+    },
+    {
+      "id": 9,
+      "computational_requirements": {
+        "CPU": 0.39025889284189186,
+        "GPU": 0.3576478970671473,
+        "memory": 3.0907810368137714
+      },
+      "execution_time": 6.90283086642844,
+      "priority": 1,
+      "dependencies": [
+        5
+      ],
+      "location": "FogNode",
+      "energy_consumption": 31.245729871399032
+    },
+    {
+      "id": 10,
+      "type": "EdgeServer",
+      "energy_consumption": 106.2718540568792,
+      "bandwidth": 99.96359890017803,
+      "latency": 4.358278606810874,
+      "computational_capacity": 200.3799886757076
+    },
+    {
+      "id": 11,
+      "type": "Cloud",
+      "energy_consumption": 493.8237215721196,
+      "bandwidth": 48.54743054766874,
+      "latency": 2.686771978905114,
+      "computational_capacity": 129.7188168009951
+    },
+    {
+      "id": 12,
+      "type": "FogNode",
+      "energy_consumption": 313.3045365808694,
+      "bandwidth": 26.786401355646365,
+      "latency": 8.802630781585147,
+      "computational_capacity": 423.7193021323897
+    },
+    {
+      "id": 13,
+      "type": "EdgeServer",
+      "energy_consumption": 165.89493974102174,
+      "bandwidth": 72.6637648267149,
+      "latency": 2.3021542357702343,
+      "computational_capacity": 256.3507214000468
+    },
+    {
+      "id": 14,
+      "type": "EdgeServer",
+      "energy_consumption": 133.17811191449016,
+      "bandwidth": 90.77033324685179,
+      "latency": 6.060495617249842,
+      "computational_capacity": 200.60969479106535
+    }
+  ],
+  "links": [
+    {
+      "source": 0,
+      "target": 3
+    },
+    {
+      "source": 0,
+      "target": 4
+    },
+    {
+      "source": 0,
+      "target": 5
+    },
+    {
+      "source": 0,
+      "target": 7
+    },
+    {
+      "source": 1,
+      "target": 2
+    },
+    {
+      "source": 1,
+      "target": 3
+    },
+    {
+      "source": 1,
+      "target": 7
+    },
+    {
+      "source": 1,
+      "target": 8
+    },
+    {
+      "source": 2,
+      "target": 3
+    },
+    {
+      "source": 2,
+      "target": 4
+    },
+    {
+      "source": 2,
+      "target": 5
+    },
+    {
+      "source": 3,
+      "target": 4
+    },
+    {
+      "source": 4,
+      "target": 5
+    },
+    {
+      "source": 4,
+      "target": 7
+    },
+    {
+      "source": 5,
+      "target": 9
+    }
+  ]
+}
