@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WOA Based on DAG</title>
+</head>
+<body>
+
+
+<h2>Graph (dag.html)</h2>
+<iframe src="./dag.html" width="100%" height="600px" frameborder="0"></iframe>
+
+<!-- Display JSON content from dag_model.json -->
+<div>
+<details>
+    <summary><h2>Graph Data (dag_model.json)</h2></summary>
+    <pre id="json-content"></pre>
+  </details>
+</div>
+
+
+<!-- Display Algorithm Outputs -->
+<h2>Algorithm Outputs</h2>
+<img src="./algo/dc.png" alt="Diversity Chart">
+<img src="./algo/eec.png" alt="Exploration Exploitation Chart">
+<img src="./algo/gbfc.png" alt="Global Best Fitness Chart">
+<img src="./algo/goc.png" alt="Global Objectives Chart">
+<img src="./algo/lbfc.png" alt="Local Best Fitness Chart">
+<img src="./algo/loc.png" alt="Local Objectives Chart">
+<img src="./algo/rtc.png" alt="Runtime Chart">
+
+<!-- Include Algorithm Outputs Links (if available) -->
+<a href="./algo/dc.png" target="_blank">Diversity Chart</a>
+<a href="./algo/eec.png" target="_blank">Exploration Exploitation Chart</a>
+<a href="./algo/gbfc.png" target="_blank">Global Best Fitness Chart</a>
+<a href="./algo/goc.png" target="_blank">Global Objectives Chart</a>
+<a href="./algo/lbfc.png" target="_blank">Local Best Fitness Chart</a>
+<a href="./algo/loc.png" target="_blank">Local Objectives Chart</a>
+<a href="./algo/rtc.png" target="_blank">Runtime Chart</a>
+
+
+
+<script>
+
+    // Load JSON content from dag_model.json and display it
+    fetch('./dag_model.json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('json-content').innerText = JSON.stringify(data, null, 2);
+        })
+        .catch(error => console.error('Error fetching JSON:', error));
+</script>
+</body>
+</html>
