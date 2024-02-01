@@ -1,145 +1,93 @@
-import numpy as np
-from mealpy import PermutationVar, WOA, Problem
+from mealpy import BinaryVar, WOA, Problem
 import json
-import logging
-
-# Set up logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s, %(levelname)s, %(name)s: %(message)s",
-    datefmt="%Y/%m/%d %I:%M:%S %p",
-)
-logger = logging.getLogger(__name__)
+import sys
 
 
-class TaskShiftingProblem(Problem):
-    def __init__(self, bounds=None, minmax="min", data=None, name="TaskShifting", **kwargs):
-        """
-        Task Shifting Multi-objective Optimization Problem.
+class EdgeCloudOffloadingProblem(Problem):
+    def __init__(self, nodes):
+        self.nodes = self.extract_cloud_tasks(nodes)
+        self.links = nodes["links"]
+        self.eps = -10000000 # Penalty value
+        self.cloud_nodes_rtt = {node["id"]: 0 for node in self.nodes}  # Dictionary to store RTT values per cloud node
+        bounds = BinaryVar(n_vars=len(self.nodes), name="offloading_var")
+        super().__init__(bounds=bounds, minmax="max", save_population=True)
 
-        Parameters:
-            bounds (PermutationVar): Permutation bounds for the task assignment order.
-            minmax (str): "min" for minimization problem.
-            data (dict): Problem data containing node and link information.
-            obj_weights (list): List of weights corresponding to each objective function.
-            name (str): Name of the problem.
-            **kwargs: Additional keyword arguments for the superclass constructor.
-        """
-        self.data = data
-        super().__init__(bounds, minmax, name=name, **kwargs)
+    def extract_cloud_tasks(self, nodes_data):
+        return [node for node in nodes_data.get("nodes", []) if node.get("type") == "CloudTask"]
 
-    def objective_min_energy_consumption(self, tasks):
-        """
-        Objective 1: Minimize energy consumption.
+    @staticmethod
+    def calculate_rtt(bandwidth_mbps, latency_ms, distance_km):
+        distance_meters = distance_km * 1000  # distance to meters
+        bandwidth_bps = bandwidth_mbps * 1e6  # bandwidth to bits per second
+        propagation_delay = distance_meters / 2.998e8  # Speed of light in meters per second
+        transmission_delay = (8 * 1e-6) / bandwidth_bps  # 8 bits in a byte, and latency is in milliseconds
+        total_delay_ms = (propagation_delay + transmission_delay + latency_ms / 1000) * 1000
+        return total_delay_ms
 
-        This objective aims to minimize the total energy consumption of the selected tasks.
+    def obj_func(self, x):
+        x_decoded = self.decode_solution(x)
+        offloading_var = x_decoded["offloading_var"]
+        total_rtt = 0  # Initialize the maximum round-trip time
+        for i, source_node in enumerate(self.nodes):
+            if offloading_var[i] == 1:
+                relevant_links = [link for link in self.links if link["source"] == source_node["id"]]
+                for link in relevant_links:
+                    total_rtt += self.calculate_rtt(link["bandwidth"], link["latency"], link["distance"])
+                average_rtt = total_rtt / len(relevant_links)
+                total_rtt = average_rtt
+                self.cloud_nodes_rtt[source_node["id"]] = total_rtt
 
-        Parameters:
-            tasks (list): List of task indices representing the assignment order.
+        if total_rtt == 0:  # If any cloud node has 0 value, it indicates that this node is not having any edge.
+            return self.eps
 
-        Returns:
-            float: Total energy consumption for the selected tasks.
-        """
-        tasks_list = tasks.astype(int).tolist()
-        energy_consumption = sum(self.data["nodes"][task]["energy_consumption"] for task in tasks_list)
-        return energy_consumption
-
-    def objective_min_latency(self, tasks):
-        """
-        Objective: Minimize total latency.
-
-        This objective aims to find the optimal deployment location based on minimizing the total latency of the selected tasks.
-
-        Parameters:
-            tasks (list): List of task indices representing the assignment order.
-
-        Returns:
-            float: Optimal deployment location based on minimizing latency.
-        """
-        tasks_list = tasks.astype(int).tolist()
-        latencies = [self.data["nodes"][task]["latency"] for task in tasks_list]
-        total_latency = sum(latencies)
-        optimal_location = total_latency / len(tasks)  # Simple example, can be more complex
-        return optimal_location
-
-    def objective_find_deployment_location_data_volume(self, tasks):
-        """
-        Objective: Find optimal deployment location based on data volume.
-
-        This objective aims to find the optimal deployment location based on the total data volume of the selected tasks.
-
-        Parameters:
-            tasks (list): List of task indices representing the assignment order.
-
-        Returns:
-            float: Optimal deployment location based on data volume.
-        """
-        tasks_list = tasks.astype(int).tolist()
-        data_volumes = [self.data["nodes"][task]["data_volume"] for task in tasks_list]
-        total_data_volume = sum(data_volumes)
-        optimal_location = total_data_volume / len(tasks)  # Simple example, can be more complex
-        return optimal_location
-
-    def obj_func(self, tasks):
-        """
-        Multi-objective function to be minimized.
-
-        Parameters:
-            tasks (numpy.ndarray): Decoded solution containing the assignment order of tasks.
-
-        Returns:
-            list: Objective function values.
-        """
-        return [
-            self.objective_min_energy_consumption(tasks),
-            self.objective_min_latency(tasks),
-            self.objective_find_deployment_location_data_volume(tasks),
-        ]
-
-
-def load_task_shifting_data(file_path):
-    """Load task shifting data from a JSON file."""
-    with open(file_path, "r") as file:
-        return json.load(file)
-
-
-def main():
-    # Load task shifting data
-    task_shifting_data = load_task_shifting_data("docs/dag_model.json")
-
-    # Extract necessary information from the loaded data
-    n_tasks = len(task_shifting_data["nodes"])
-
-    # Define permutation bounds
-    task_bounds = PermutationVar(valid_set=list(range(n_tasks)), name="per_var")
-
-    # Define objectives weights
-    weights = [0.4, 0.1, 0.5]
-
-    # Create the TaskShiftingProblem instance
-    task_shifting_problem_multi = TaskShiftingProblem(
-        bounds=task_bounds, minmax="min", data=task_shifting_data, obj_weights=weights
-    )
-
-    # Solve the problem using WOA algorithm
-    model = WOA.OriginalWOA(epoch=1000, pop_size=20)
-    model.solve(problem=task_shifting_problem_multi)
-
-    # Visualization purposes
-    # You can access them all via object "history" like this:
-    model.history.save_global_objectives_chart(filename="docs/algo/goc")
-    model.history.save_local_objectives_chart(filename="docs/algo/loc")
-    model.history.save_global_best_fitness_chart(filename="docs/algo/gbfc")
-    model.history.save_local_best_fitness_chart(filename="docs/algo/lbfc")
-    model.history.save_runtime_chart(filename="docs/algo/rtc")
-    model.history.save_exploration_exploitation_chart(filename="docs/algo/eec")
-    model.history.save_diversity_chart(filename="docs/algo/dc")
-
-    # Print results
-    best_solution = task_shifting_problem_multi.decode_solution(model.g_best.solution)
-    logger.info(f"Best solution: {best_solution}")
-    logger.info(f"Best fitness: {model.g_best.target.fitness}")
+        # A good round-trip time (RTT) should be below 100 milliseconds for optimal performance.
+        # https://aws.amazon.com/what-is/rtt-in-networking/
+        if total_rtt > 100:
+             return self.eps + total_rtt
+           
+        return total_rtt
 
 
 if __name__ == "__main__":
-    main()
+    sys.stdout = open('docs/output.txt', 'w')
+    sys.stdout = sys.__stdout__
+    # Example usage for cloud offloading to edge
+    with open("docs/dag_model.json", "r") as file:
+        nodes_data = json.load(file)
+
+    problem = EdgeCloudOffloadingProblem(nodes_data)
+    model = WOA.HI_WOA(epoch=1000, pop_size=5)
+    model.solve(problem)
+
+    # Visualization purposes
+    # You can access them all via object "history" like this:
+    charts_path = "docs/algo/"
+    model.history.save_global_objectives_chart(filename=f"{charts_path}goc")
+    model.history.save_local_objectives_chart(filename=f"{charts_path}loc")
+    model.history.save_global_best_fitness_chart(filename=f"{charts_path}gbfc")
+    model.history.save_local_best_fitness_chart(filename=f"{charts_path}lbfc")
+    model.history.save_runtime_chart(filename=f"{charts_path}rtc")
+    model.history.save_exploration_exploitation_chart(filename=f"{charts_path}eec")
+    model.history.save_diversity_chart(filename=f"{charts_path}dc")
+    model.history.save_trajectory_chart(filename=f"{charts_path}tc")
+
+    # Save prints into a file
+    with open('docs/output.txt', 'w') as output_file:
+        print("\n------------------- Algorithm output ---", file=output_file)
+        print(f"Best agent: {model.g_best}", file=output_file)
+        print(f"Best solution: {model.g_best.solution}", file=output_file)
+        print(f"Best fitness: {model.g_best.target.fitness}", file=output_file)
+        print(f"Best offloading configuration: {problem.decode_solution(model.g_best.solution)}", file=output_file)
+
+        offloading_var = problem.decode_solution(model.g_best.solution)['offloading_var']
+
+        cloud_tasks_to_shift = [node_id for i, node_id in enumerate(problem.cloud_nodes_rtt) if offloading_var[i] == 1]
+        print("\n-------------------- Offloading decision ---", file=output_file)
+        print(f"CloudTasks total number: {len(problem.nodes)}", file=output_file)
+        print(f"CloudTasks total number to shift: {len(cloud_tasks_to_shift)}", file=output_file)
+        print(f"CloudTasks to shift from cloud to edge: {cloud_tasks_to_shift}", file=output_file)
+        print("\n-------------------- Offloading Debug --- ", file=output_file)
+        # Display RTT values for the tasks shifted
+        rtt_values_for_shifted_tasks = {node_id: problem.cloud_nodes_rtt[node_id] for node_id in cloud_tasks_to_shift}
+        print("RTT values for selected Cloud tasks:", rtt_values_for_shifted_tasks, file=output_file)
+        print("All RTT values for all Cloud tasks: ", problem.cloud_nodes_rtt, file=output_file)

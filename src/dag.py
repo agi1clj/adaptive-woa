@@ -3,8 +3,43 @@ from pyvis.network import Network
 import random
 import json
 
+def generate_tasks(task_names, task_type, regions, providers, data_volume_range, computational_requirements_range, energy_consumption_range):
+    tasks = {}
+    for task_name in task_names:
+        region = random.choice(regions)
+        provider = random.choice(providers)
+        tasks[task_name] = {
+            "type": task_type,
+            "region": region,
+            "provider": provider,
+            "data_volume": random.uniform(*data_volume_range),
+            "computational_requirements": {
+                "cpu": random.uniform(*computational_requirements_range),
+                "memory": random.uniform(*computational_requirements_range),
+            },
+            "energy_consumption": random.uniform(*energy_consumption_range),
+        }
+    return tasks
 
-def generate_dag():
+def generate_edges(source_tasks, target_tasks, edge_func):
+    edges = []
+    if target_tasks:
+        target_task_keys = list(target_tasks.keys())
+        for source_task in source_tasks:
+            for target_task in random.sample(target_task_keys, random.randint(1, len(target_task_keys))):
+                edges.append(edge_func(source_task, target_task))
+    return edges
+
+def edge_func_latency_bandwidth(latency_range, bandwidth_range, distance_range):
+    def inner(source, target):
+        return (source, target, {
+            "latency": random.uniform(*latency_range),
+            "bandwidth": random.uniform(*bandwidth_range),
+            "distance": random.uniform(*distance_range)
+        })
+    return inner
+
+def generate_dag(fog_layer=True):
     dag = nx.DiGraph()
 
     aws_regions = [
@@ -17,98 +52,76 @@ def generate_dag():
         "eu-west-2",
     ]
 
-    # Add edge tasks
-    edge_task_names = [f"Edge_Task_{i}" for i in range(10)]
-    for task_name in edge_task_names:
-        edge_provider = random.choice(
-            ["Cluj-MdC-01", "Sibiu-MdC-02", "Timisoara-MdC-03"]
-        )
-        dag.add_node(
-            task_name,
-            type="EdgeTask",
-            region="eu-central-1",
-            provider=edge_provider,
-            data_volume=random.uniform(1, 10),  # in GB
-            computational_requirements={
-                "CPU": random.uniform(5, 10),
-                "Memory": random.uniform(10, 20),
-            },  # in GHz, GB
-            latency=random.uniform(1, 5),  # in ms
-            bandwidth=random.uniform(5, 10),  # in Mbps
-            energy_consumption=random.uniform(20, 40),
-        )  # in Watts
+    edge_task_names = [f"Edge_Task_{i}" for i in range(35)]
+    fog_task_names = [f"Fog_Task_{i}" for i in range(5)] if fog_layer else []
+    cloud_task_names = [f"Cloud_Task_{i}" for i in range(100)]
 
-    # Add fog tasks
-    fog_task_names = [f"Fog_Task_{i}" for i in range(5)]
-    for task_name in fog_task_names:
-        fog_provider = random.choice(["Cluj-DC-01", "Brasov-DC-02", "Bucuresti-DC-03"])
-        dag.add_node(
-            task_name,
-            type="FogTask",
-            region="eu-central-1",
-            provider=fog_provider,
-            data_volume=random.uniform(10, 50),  # in GB
-            computational_requirements={
-                "CPU": random.uniform(10, 30),
-                "Memory": random.uniform(30, 50),
-            },  # in GHz, GB
-            latency=random.uniform(5, 10),  # in ms
-            bandwidth=random.uniform(10, 20),  # in Mbps
-            energy_consumption=random.uniform(30, 60),
-        )  # in Watts
+    edge_tasks = generate_tasks(
+        edge_task_names,
+        "EdgeTask",
+        aws_regions,
+        ["MdC-01", "MdC-02", "MdC-03"],
+        (1, 10),
+        (5, 10),
+        (20, 40)
+    )
 
-    # Add cloud tasks
-    cloud_task_names = [f"Cloud_Task_{i}" for i in range(5)]
-    for task_name in cloud_task_names:
-        region = random.choice(aws_regions)
-        provider = random.choice(["AWS", "Azure", "Heroku", "GCP"])
-        dag.add_node(
-            task_name,
-            type="CloudTask",
-            region=region,
-            provider=provider,
-            data_volume=random.uniform(50, 100),  # in GB
-            computational_requirements={
-                "CPU": random.uniform(30, 50),
-                "Memory": random.uniform(50, 100),
-            },  # in GHz, GB
-            latency=random.uniform(10, 20),  # in ms
-            bandwidth=random.uniform(20, 30),  # in Mbps
-            energy_consumption=random.uniform(60, 80),
-        )  # in Watts
+    fog_tasks = generate_tasks(
+        fog_task_names,
+        "FogTask",
+        aws_regions,
+        ["DC-01", "DC-02", "DC-03"],
+        (10, 50),
+        (10, 30),
+        (30, 60)
+    ) if fog_layer else {}
 
-    # Connect tasks based on the architecture with selective links
-    for edge_task in edge_task_names:
-        # Connect edge tasks to a random subset of fog tasks
-        for fog_task in random.sample(
-            fog_task_names, random.randint(1, len(fog_task_names))
-        ):
-            dag.add_edge(edge_task, fog_task)
+    cloud_tasks = generate_tasks(
+        cloud_task_names,
+        "CloudTask",
+        aws_regions,
+        ["AWS", "Azure", "Heroku", "GCP"],
+        (50, 100),
+        (30, 50),
+        (60, 80)
+    )
 
-    for fog_task in fog_task_names:
-        # Connect fog tasks to a random subset of cloud tasks
-        for cloud_task in random.sample(
-            cloud_task_names, random.randint(1, len(cloud_task_names))
-        ):
-            dag.add_edge(fog_task, cloud_task)
+    dag.add_nodes_from(list(edge_tasks.items()) + list(fog_tasks.items()) + list(cloud_tasks.items()))
+
+    if fog_layer:
+        edge_func_edge_to_fog = edge_func_latency_bandwidth((1, 5), (5, 10), (1, 100))
+        edge_edges = generate_edges(edge_tasks, fog_tasks, edge_func_edge_to_fog)
+        dag.add_edges_from(edge_edges)
+
+        edge_func_fog_to_cloud = edge_func_latency_bandwidth((5, 10), (10, 20), (100, 150))
+        fog_edges = generate_edges(fog_tasks, cloud_tasks, edge_func_fog_to_cloud)
+        dag.add_edges_from(fog_edges)
+    else:
+        edge_func_edge_to_cloud = edge_func_latency_bandwidth((50, 100), (1, 10), (500, 1000))
+        edge_edges = generate_edges(cloud_tasks, edge_tasks, edge_func_edge_to_cloud)
+        dag.add_edges_from(edge_edges)
 
     return dag
 
-
 # Generate the DAG
-dag = generate_dag()
+dag = generate_dag(fog_layer=False)
 
 # Set node attributes for hover text
 node_properties = {
     node: f"{node}, Type: {dag.nodes[node]['type']}, Region: {dag.nodes[node]['region']}, "
     f"Provider: {dag.nodes[node]['provider']}, "
     f"Data Volume: {dag.nodes[node]['data_volume']:.2f} GB, "
-    f"CPU: {dag.nodes[node]['computational_requirements']['CPU']:.2f} GHz, "
-    f"Memory: {dag.nodes[node]['computational_requirements']['Memory']:.2f} GB, "
-    f"Latency: {dag.nodes[node]['latency']:.2f} ms, "
-    f"Bandwidth: {dag.nodes[node]['bandwidth']:.2f} Mbps, "
+    f"CPU: {dag.nodes[node]['computational_requirements']['cpu']:.2f} GHz, "
+    f"Memory: {dag.nodes[node]['computational_requirements']['memory']:.2f} GB, "
     f"Energy Consumption: {dag.nodes[node]['energy_consumption']:.2f} Watts"
     for node in dag.nodes
+}
+
+edge_properties = {
+    (edge[0], edge[1]): f"Latency: {dag.edges[edge]['latency']:.2f} ms, "
+                       f"Bandwidth: {dag.edges[edge]['bandwidth']:.2f} Mbps, "
+                       f"Distance: {dag.edges[edge]['distance']:.2f} km"
+    for edge in dag.edges
 }
 
 # Create Pyvis network
@@ -129,10 +142,11 @@ for node, properties in node_properties.items():
     )
     g.add_node(node, title=properties, color=color)
 
-for edge in dag.edges:
-    g.add_edge(edge[0], edge[1])
+for edge, properties in edge_properties.items():
+    g.add_edge(edge[0], edge[1], title=properties)
 
 g.show("docs/dag.html")
+
 # Export the DAG to JSON format
 dag_json = nx.node_link_data(dag)
 

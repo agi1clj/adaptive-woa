@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WOA Based on DAG</title>
+    <title>HI-WOA Based on DAG</title>
 </head>
 <body>
 
@@ -19,9 +19,12 @@
   </details>
 </div>
 
+<h2>Algorithm Output log</h2>
+<pre id="output-content"></pre>
+
 
 <!-- Display Algorithm Outputs -->
-<h2>Algorithm Outputs</h2>
+<h2>Algorithm Chart Outputs</h2>
 <img src="./algo/dc.png" alt="Diversity Chart">
 <img src="./algo/eec.png" alt="Exploration Exploitation Chart">
 <img src="./algo/gbfc.png" alt="Global Best Fitness Chart">
@@ -29,17 +32,7 @@
 <img src="./algo/lbfc.png" alt="Local Best Fitness Chart">
 <img src="./algo/loc.png" alt="Local Objectives Chart">
 <img src="./algo/rtc.png" alt="Runtime Chart">
-
-<!-- Include Algorithm Outputs Links (if available) -->
-<a href="./algo/dc.png" target="_blank">Diversity Chart</a>
-<a href="./algo/eec.png" target="_blank">Exploration Exploitation Chart</a>
-<a href="./algo/gbfc.png" target="_blank">Global Best Fitness Chart</a>
-<a href="./algo/goc.png" target="_blank">Global Objectives Chart</a>
-<a href="./algo/lbfc.png" target="_blank">Local Best Fitness Chart</a>
-<a href="./algo/loc.png" target="_blank">Local Objectives Chart</a>
-<a href="./algo/rtc.png" target="_blank">Runtime Chart</a>
-
-
+<img src="./algo/tc.png" alt="Trajectory Chart">
 
 <script>
 
@@ -50,6 +43,15 @@
             document.getElementById('json-content').innerText = JSON.stringify(data, null, 2);
         })
         .catch(error => console.error('Error fetching JSON:', error));
+
+    fetch('./output.txt')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('output-content').innerText = data;
+        })
+        .catch(error => console.error('Error fetching content:', error));
+
+    
 </script>
 </body>
 </html>
