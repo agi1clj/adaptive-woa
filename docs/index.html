@@ -19,8 +19,11 @@
   </details>
 </div>
 
-<h2>Algorithm Output log</h2>
-<pre id="output-content"></pre>
+<details>
+    <summary><h2>Offloading Output</h2></summary>
+    <pre id="output-content"></pre>
+  </details>
+</div>
 
 
 <!-- Display Algorithm Outputs -->
@@ -44,7 +47,7 @@
         })
         .catch(error => console.error('Error fetching JSON:', error));
 
-    fetch('./output.txt')
+    fetch('./cloud_offloading_results.json')
         .then(response => response.text())
         .then(data => {
             document.getElementById('output-content').innerText = data;
