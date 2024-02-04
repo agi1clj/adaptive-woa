@@ -5,6 +5,9 @@ description = "An adaptive Whales Optimization Algorithm (WOA) for making offloa
 authors = ["Arcas Gabriel-Ioan <gabriel.arcas@ro.bosch.com>"]
 license = "MIT"
 readme = "README.md"
+packages = [
+    { include = "src" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -12,6 +15,7 @@ swarmlib = "^0.14.1"
 matplotlib = "3.5.0"
 pyvis = "^0.3.2"
 mealpy = "^3.0.1"
+pyyaml = "^6.0.1"
 
 [tool.poetry.group.dev.dependencies]
 swarmlib = "^0.14.1"

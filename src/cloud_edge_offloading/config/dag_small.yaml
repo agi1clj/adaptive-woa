@@ -1,0 +1,8 @@
+description: "Small config for shifting tasks from Cloud to Edge"
+algo:
+  threshold_comp_euclidean_dist: 10
+  threshold_rtt: 90
+  epoch: 1000 
+  pop_size: 20
+dag:
+  file_path: "docs/dag_small/dag_model.json"
