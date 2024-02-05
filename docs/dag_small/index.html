@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HI-WOA Based on DAG</title>
+</head>
+<body>
+
+
+<h2>Graph (dag.html)</h2>
+<iframe src="./dag.html" width="100%" height="600px" frameborder="0"></iframe>
+
+<!-- Display JSON content from dag_model.json -->
+<div>
+<details>
+    <summary><h2>Graph Data (dag_model.json)</h2></summary>
+    <pre id="json-content"></pre>
+  </details>
+</div>
+
+<details>
+    <summary><h2>Offloading Dicision</h2></summary>
+    <pre id="output-content"></pre>
+  </details>
+</div>
+
+
+<!-- Display Algorithm Outputs -->
+<h2>Algorithm Chart Outputs</h2>
+<img src="./algo/dc.png" alt="Diversity Chart">
+<img src="./algo/eec.png" alt="Exploration Exploitation Chart">
+<img src="./algo/gbfc.png" alt="Global Best Fitness Chart">
+<img src="./algo/goc.png" alt="Global Objectives Chart">
+<img src="./algo/lbfc.png" alt="Local Best Fitness Chart">
+<img src="./algo/loc.png" alt="Local Objectives Chart">
+<img src="./algo/rtc.png" alt="Runtime Chart">
+<img src="./algo/tc.png" alt="Trajectory Chart">
+
+<script>
+
+    // Load JSON content from dag_model.json and display it
+    fetch('./dag_model.json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('json-content').innerText = JSON.stringify(data, null, 2);
+        })
+        .catch(error => console.error('Error fetching JSON:', error));
+
+    fetch('./algo/cloud_offloading_results.json')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('output-content').innerText = data;
+        })
+        .catch(error => console.error('Error fetching content:', error));
+
+    
+</script>
+</body>
+</html>

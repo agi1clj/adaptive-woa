@@ -9,7 +9,7 @@ def load_configuration(file_path):
     return config
 
 if __name__ == "__main__":
-    config_files = ["src/cloud_edge_offloading/config/dag_medium.yaml"]
+    config_files = ["src/cloud_edge_offloading/config/dag_small.yaml"]
     for config_file in config_files:
         config_yaml = load_configuration(config_file)
         print(f"Running the configuration: {config_yaml}")
