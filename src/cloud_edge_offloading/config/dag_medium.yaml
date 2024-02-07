@@ -2,7 +2,8 @@ description: "Medium config for shifting tasks from Cloud to Edge"
 algo:
   threshold_comp_euclidean_dist: 10
   threshold_rtt: 90
-  epoch: 1000 
-  pop_size: 50
+  threshold_penalty_factor: -6
+  epoch: 2200 
+  pop_size: 20
 dag:
   file_path: "docs/dag_medium/dag_model.json"

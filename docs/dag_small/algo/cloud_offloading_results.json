@@ -1,198 +1,227 @@
 {
   "offloading_decision": {
     "cloud_tasks_total_number": 10,
-    "cloud_tasks_total_number_to_shift": 2,
+    "cloud_tasks_total_number_to_shift": 5,
     "cloud_tasks_to_shift_from_cloud_to_edge": [
+      "Cloud_Task_1",
       "Cloud_Task_4",
-      "Cloud_Task_8"
+      "Cloud_Task_5",
+      "Cloud_Task_8",
+      "Cloud_Task_9"
+    ],
+    "cloud_tasks_to_shift_details": [
+      {
+        "cloud_task_id": "Cloud_Task_1",
+        "best_edge_node": "Edge_Task_0",
+        "details": {
+          "comp_euclidean_dist": 9.118927523391696,
+          "rtt": 66.33389669245294
+        }
+      },
+      {
+        "cloud_task_id": "Cloud_Task_4",
+        "best_edge_node": "Edge_Task_4",
+        "details": {
+          "comp_euclidean_dist": 10.249276222282218,
+          "rtt": 67.47009095807016
+        }
+      },
+      {
+        "cloud_task_id": "Cloud_Task_5",
+        "best_edge_node": "Edge_Task_0",
+        "details": {
+          "comp_euclidean_dist": 7.0785790625770915,
+          "rtt": 61.47860917741648
+        }
+      },
+      {
+        "cloud_task_id": "Cloud_Task_8",
+        "best_edge_node": "Edge_Task_2",
+        "details": {
+          "comp_euclidean_dist": 5.796525199579458,
+          "rtt": 98.07693011739993
+        }
+      },
+      {
+        "cloud_task_id": "Cloud_Task_9",
+        "best_edge_node": "Edge_Task_0",
+        "details": {
+          "comp_euclidean_dist": 8.9137219942755,
+          "rtt": 79.365710865142
+        }
+      }
     ]
   },
   "offloading_debug": {
-    "Cloud_Task_1": {
+    "Cloud_Task_0": {
       "links": {
-        "Edge_Task_1": {
-          "comp_euclidean_dist": 13.558612355906588,
-          "rtt": 64.73944986450752
-        },
         "Edge_Task_0": {
-          "comp_euclidean_dist": 19.013075863924087,
-          "rtt": 62.17113005681994
-        },
-        "Edge_Task_2": {
-          "comp_euclidean_dist": 18.952170923359002,
-          "rtt": 91.83251308093124
+          "comp_euclidean_dist": 10.451222612173703,
+          "rtt": 95.96761125970593
         },
         "Edge_Task_3": {
-          "comp_euclidean_dist": 8.005887922161593,
-          "rtt": 98.42131055888589
+          "comp_euclidean_dist": 13.73961769323226,
+          "rtt": 101.32807293539004
+        },
+        "Edge_Task_1": {
+          "comp_euclidean_dist": 3.0006332726575558,
+          "rtt": 77.06993439593445
+        },
+        "Edge_Task_2": {
+          "comp_euclidean_dist": 17.334081422791456,
+          "rtt": 70.52597363035126
         }
       }
     },
-    "Cloud_Task_2": {
+    "Cloud_Task_1": {
       "links": {
-        "Edge_Task_2": {
-          "comp_euclidean_dist": 14.543919672605535,
-          "rtt": 101.85893939748
-        },
         "Edge_Task_4": {
-          "comp_euclidean_dist": 18.2005837843411,
-          "rtt": 57.37124336448956
+          "comp_euclidean_dist": 32.06766996715613,
+          "rtt": 87.26516952183471
         },
         "Edge_Task_0": {
-          "comp_euclidean_dist": 25.06948638673306,
-          "rtt": 79.77507447760286
+          "comp_euclidean_dist": 9.118927523391696,
+          "rtt": 66.33389669245294
         },
         "Edge_Task_3": {
-          "comp_euclidean_dist": 16.213235355106082,
-          "rtt": 89.09185118304023
+          "comp_euclidean_dist": 18.17341471354798,
+          "rtt": 98.68374777945047
+        },
+        "Edge_Task_2": {
+          "comp_euclidean_dist": 13.821777589698522,
+          "rtt": 79.76631487570171
+        },
+        "Edge_Task_1": {
+          "comp_euclidean_dist": 11.725027412374125,
+          "rtt": 86.08916127399931
         }
       }
     },
     "Cloud_Task_3": {
       "links": {
-        "Edge_Task_4": {
-          "comp_euclidean_dist": 15.094312229721945,
-          "rtt": 77.1158153026481
-        },
-        "Edge_Task_0": {
-          "comp_euclidean_dist": 20.365779590548136,
-          "rtt": 85.89534895003975
+        "Edge_Task_1": {
+          "comp_euclidean_dist": 26.295964226217162,
+          "rtt": 68.9784094573213
         },
         "Edge_Task_2": {
-          "comp_euclidean_dist": 13.19079776381411,
-          "rtt": 84.57473848629385
-        },
-        "Edge_Task_1": {
-          "comp_euclidean_dist": 11.468168943845019,
-          "rtt": 100.41762091430807
-        },
-        "Edge_Task_3": {
-          "comp_euclidean_dist": 14.748417993872659,
-          "rtt": 58.08387768670784
-        }
-      }
-    },
-    "Cloud_Task_5": {
-      "links": {
-        "Edge_Task_4": {
-          "comp_euclidean_dist": 13.363131662103891,
-          "rtt": 74.50635360912788
-        },
-        "Edge_Task_0": {
-          "comp_euclidean_dist": 13.133509563252879,
-          "rtt": 53.8388614299641
-        },
-        "Edge_Task_1": {
-          "comp_euclidean_dist": 18.874017945443764,
-          "rtt": 52.95641403673601
-        },
-        "Edge_Task_3": {
-          "comp_euclidean_dist": 8.656889378618871,
-          "rtt": 95.78498193159558
-        }
-      }
-    },
-    "Cloud_Task_6": {
-      "links": {
-        "Edge_Task_3": {
-          "comp_euclidean_dist": 17.2883549258366,
-          "rtt": 96.84651494108226
-        }
-      }
-    },
-    "Cloud_Task_7": {
-      "links": {
-        "Edge_Task_1": {
-          "comp_euclidean_dist": 32.81878080148859,
-          "rtt": 82.96708377032905
-        },
-        "Edge_Task_2": {
-          "comp_euclidean_dist": 17.933767552524273,
-          "rtt": 95.60381986557914
-        },
-        "Edge_Task_0": {
-          "comp_euclidean_dist": 19.30979117775573,
-          "rtt": 92.77989468365516
-        },
-        "Edge_Task_4": {
-          "comp_euclidean_dist": 16.472871969746354,
-          "rtt": 93.39381511961246
-        },
-        "Edge_Task_3": {
-          "comp_euclidean_dist": 25.571639745625006,
-          "rtt": 90.52320454293535
+          "comp_euclidean_dist": 26.955093417848175,
+          "rtt": 99.09412903391816
         }
       }
     },
     "Cloud_Task_4": {
       "links": {
-        "Edge_Task_1": {
-          "comp_euclidean_dist": 21.754430746806936,
-          "rtt": 76.85779878166599
+        "Edge_Task_3": {
+          "comp_euclidean_dist": 16.15041878312241,
+          "rtt": 59.57035582422868
         },
         "Edge_Task_2": {
-          "comp_euclidean_dist": 20.172312549845874,
-          "rtt": 80.00071135640881
-        },
-        "Edge_Task_3": {
-          "comp_euclidean_dist": 4.71194361498838,
-          "rtt": 59.38611213046373
+          "comp_euclidean_dist": 26.28160464447124,
+          "rtt": 80.10710470569441
         },
         "Edge_Task_4": {
-          "comp_euclidean_dist": 12.505771016728042,
-          "rtt": 90.45173121228275
+          "comp_euclidean_dist": 10.249276222282218,
+          "rtt": 67.47009095807016
+        }
+      }
+    },
+    "Cloud_Task_5": {
+      "links": {
+        "Edge_Task_3": {
+          "comp_euclidean_dist": 12.461106165074487,
+          "rtt": 81.63650719717266
         },
         "Edge_Task_0": {
-          "comp_euclidean_dist": 10.873389729824764,
-          "rtt": 62.084730322612415
+          "comp_euclidean_dist": 7.0785790625770915,
+          "rtt": 61.47860917741648
+        }
+      }
+    },
+    "Cloud_Task_6": {
+      "links": {
+        "Edge_Task_2": {
+          "comp_euclidean_dist": 11.74076269583938,
+          "rtt": 91.13157330947372
+        }
+      }
+    },
+    "Cloud_Task_7": {
+      "links": {
+        "Edge_Task_4": {
+          "comp_euclidean_dist": 30.054738714581667,
+          "rtt": 72.7752611317789
+        },
+        "Edge_Task_0": {
+          "comp_euclidean_dist": 13.98380480215518,
+          "rtt": 76.69789257933758
+        },
+        "Edge_Task_3": {
+          "comp_euclidean_dist": 20.58850122808193,
+          "rtt": 101.483160796676
+        },
+        "Edge_Task_1": {
+          "comp_euclidean_dist": 21.20105557487428,
+          "rtt": 72.74812251971159
         }
       }
     },
     "Cloud_Task_8": {
       "links": {
+        "Edge_Task_0": {
+          "comp_euclidean_dist": 7.847251187658647,
+          "rtt": 87.18459646803521
+        },
+        "Edge_Task_2": {
+          "comp_euclidean_dist": 5.796525199579458,
+          "rtt": 98.07693011739993
+        },
         "Edge_Task_3": {
-          "comp_euclidean_dist": 8.353830137839484,
-          "rtt": 56.68616787392549
+          "comp_euclidean_dist": 16.19459347842044,
+          "rtt": 59.086681389364585
+        },
+        "Edge_Task_4": {
+          "comp_euclidean_dist": 28.905392369853246,
+          "rtt": 58.7059792922574
+        },
+        "Edge_Task_1": {
+          "comp_euclidean_dist": 15.300469202478375,
+          "rtt": 64.21080346530842
+        }
+      }
+    },
+    "Cloud_Task_2": {
+      "links": {
+        "Edge_Task_0": {
+          "comp_euclidean_dist": 30.73619000225625,
+          "rtt": 90.27027402792176
+        },
+        "Edge_Task_3": {
+          "comp_euclidean_dist": 20.07546989296683,
+          "rtt": 88.06904229543588
         }
       }
     },
     "Cloud_Task_9": {
       "links": {
         "Edge_Task_4": {
-          "comp_euclidean_dist": 13.760790286119164,
-          "rtt": 101.44497979125049
+          "comp_euclidean_dist": 30.383093652730167,
+          "rtt": 59.7827077848128
         },
         "Edge_Task_0": {
-          "comp_euclidean_dist": 11.305007286686871,
-          "rtt": 64.37955171505958
-        },
-        "Edge_Task_1": {
-          "comp_euclidean_dist": 23.20550662370699,
-          "rtt": 73.46191402395348
-        },
-        "Edge_Task_2": {
-          "comp_euclidean_dist": 21.64613251674465,
-          "rtt": 82.93248219743565
+          "comp_euclidean_dist": 8.9137219942755,
+          "rtt": 79.365710865142
         },
         "Edge_Task_3": {
-          "comp_euclidean_dist": 6.312580902859061,
-          "rtt": 53.91590484816705
-        }
-      }
-    },
-    "Cloud_Task_0": {
-      "links": {
-        "Edge_Task_0": {
-          "comp_euclidean_dist": 8.170527124620696,
-          "rtt": 54.62213548496516
+          "comp_euclidean_dist": 17.81356528777945,
+          "rtt": 71.522868789615
+        },
+        "Edge_Task_2": {
+          "comp_euclidean_dist": 9.769688654752377,
+          "rtt": 86.89349465984465
         },
         "Edge_Task_1": {
-          "comp_euclidean_dist": 20.14045390609598,
-          "rtt": 100.43634254998659
-        },
-        "Edge_Task_4": {
-          "comp_euclidean_dist": 1.6890950957262776,
-          "rtt": 90.28949786571384
+          "comp_euclidean_dist": 14.769988241033246,
+          "rtt": 78.11615404767947
         }
       }
     }
