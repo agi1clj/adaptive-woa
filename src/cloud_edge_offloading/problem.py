@@ -107,7 +107,7 @@ class CloudToEdgeOffloadingProblem(Problem):
                     else:
                         total_rtt += link_rtt
 
-                    # Penalty for eucledean distance
+                    # Penalty for euclidean distance
                     if link_distance > self.threshold_comp_euclidean_dist:
                         total_distance += self.threshold_penalty_factor * (
                             link_distance - self.threshold_comp_euclidean_dist
