@@ -5,386 +5,464 @@
   "nodes": [
     {
       "type": "EdgeTask",
-      "region": "eu-west-3",
-      "computational_capacity": {
-        "cpu_ghz": 42.03112401838708,
-        "memory_gb": 23.446930687919803,
-        "ram_gb": 4
-      },
-      "id": "Edge_Task_0"
-    },
-    {
-      "type": "EdgeTask",
-      "region": "eu-central-1",
-      "computational_capacity": {
-        "cpu_ghz": 46.81618612380231,
-        "memory_gb": 28.895276222131912,
-        "ram_gb": 8
+      "region": "Africa",
+      "computational_requirements": {
+        "cpu_ghz": 43.80039538989989,
+        "memory_gb": 23.91021181490929,
+        "ram_gb": 32
       },
       "id": "Edge_Task_1"
     },
     {
       "type": "EdgeTask",
-      "region": "eu-south-1",
-      "computational_capacity": {
-        "cpu_ghz": 36.262170107116724,
-        "memory_gb": 18.3542238597382,
-        "ram_gb": 8
+      "region": "Australia",
+      "computational_requirements": {
+        "cpu_ghz": 44.700256887306516,
+        "memory_gb": 10.54958818212615,
+        "ram_gb": 2
       },
       "id": "Edge_Task_2"
     },
     {
       "type": "EdgeTask",
-      "region": "eu-west-1",
-      "computational_capacity": {
-        "cpu_ghz": 38.889326422276326,
-        "memory_gb": 26.79772468152504,
-        "ram_gb": 16
+      "region": "Middle East",
+      "computational_requirements": {
+        "cpu_ghz": 42.81708577481188,
+        "memory_gb": 24.94752769799768,
+        "ram_gb": 2
       },
       "id": "Edge_Task_3"
     },
     {
       "type": "EdgeTask",
-      "region": "eu-central-1",
-      "computational_capacity": {
-        "cpu_ghz": 34.00411410062594,
-        "memory_gb": 20.318047205140445,
-        "ram_gb": 32
+      "region": "Europe",
+      "computational_requirements": {
+        "cpu_ghz": 43.414047642945405,
+        "memory_gb": 28.86422373931175,
+        "ram_gb": 8
       },
       "id": "Edge_Task_4"
     },
     {
-      "type": "CloudTask",
-      "region": "eu-central-1",
+      "type": "EdgeTask",
+      "region": "South America",
       "computational_requirements": {
-        "cpu_ghz": 49.803719841876514,
-        "memory_gb": 29.17535178398856,
+        "cpu_ghz": 35.11209055065393,
+        "memory_gb": 11.410649046753722,
+        "ram_gb": 2
+      },
+      "id": "Edge_Task_5"
+    },
+    {
+      "type": "EdgeTask",
+      "region": "South America",
+      "computational_requirements": {
+        "cpu_ghz": 37.57801454236883,
+        "memory_gb": 14.644055158486017,
+        "ram_gb": 2
+      },
+      "id": "Edge_Task_6"
+    },
+    {
+      "type": "EdgeTask",
+      "region": "Europe",
+      "computational_requirements": {
+        "cpu_ghz": 34.21287047661465,
+        "memory_gb": 14.883926202900629,
         "ram_gb": 8
       },
-      "id": "Cloud_Task_0"
+      "id": "Edge_Task_7"
+    },
+    {
+      "type": "EdgeTask",
+      "region": "North America",
+      "computational_requirements": {
+        "cpu_ghz": 48.096767880902064,
+        "memory_gb": 21.300436137574152,
+        "ram_gb": 32
+      },
+      "id": "Edge_Task_8"
+    },
+    {
+      "type": "EdgeTask",
+      "region": "Africa",
+      "computational_requirements": {
+        "cpu_ghz": 34.69249158384577,
+        "memory_gb": 23.574013061543184,
+        "ram_gb": 32
+      },
+      "id": "Edge_Task_9"
+    },
+    {
+      "type": "EdgeTask",
+      "region": "Middle East",
+      "computational_requirements": {
+        "cpu_ghz": 37.59704633915502,
+        "memory_gb": 29.661199750742703,
+        "ram_gb": 16
+      },
+      "id": "Edge_Task_10"
+    },
+    {
+      "type": "EdgeTask",
+      "region": "North America",
+      "computational_requirements": {
+        "cpu_ghz": 36.608579564806625,
+        "memory_gb": 8.233019149257766,
+        "ram_gb": 8
+      },
+      "id": "Edge_Task_11"
+    },
+    {
+      "type": "EdgeTask",
+      "region": "Middle East",
+      "computational_requirements": {
+        "cpu_ghz": 40.32341906864146,
+        "memory_gb": 21.442715371818295,
+        "ram_gb": 2
+      },
+      "id": "Edge_Task_12"
     },
     {
       "type": "CloudTask",
-      "region": "eu-south-1",
+      "region": "North America",
       "computational_requirements": {
-        "cpu_ghz": 49.4916356818856,
-        "memory_gb": 18.203305520569145,
-        "ram_gb": 4
+        "cpu_ghz": 38.00144390874831,
+        "memory_gb": 23.352784294300907,
+        "ram_gb": 32
       },
       "id": "Cloud_Task_1"
     },
     {
       "type": "CloudTask",
-      "region": "eu-west-2",
+      "region": "North America",
       "computational_requirements": {
-        "cpu_ghz": 30.61527373996149,
-        "memory_gb": 17.93406044861909,
-        "ram_gb": 32
+        "cpu_ghz": 30.67103206514307,
+        "memory_gb": 12.377362626816716,
+        "ram_gb": 16
       },
       "id": "Cloud_Task_2"
     },
     {
       "type": "CloudTask",
-      "region": "eu-west-3",
+      "region": "Europe",
       "computational_requirements": {
-        "cpu_ghz": 48.532971818889855,
-        "memory_gb": 18.287242405083838,
+        "cpu_ghz": 43.74056302310039,
+        "memory_gb": 19.78207346985951,
         "ram_gb": 32
       },
       "id": "Cloud_Task_3"
     },
     {
-      "type": "CloudTask",
-      "region": "eu-west-2",
+      "type": "FogTask",
+      "region": "Africa",
       "computational_requirements": {
-        "cpu_ghz": 40.63885705422788,
-        "memory_gb": 28.13007952843949,
-        "ram_gb": 32
-      },
-      "id": "Cloud_Task_4"
-    },
-    {
-      "type": "CloudTask",
-      "region": "eu-west-2",
-      "computational_requirements": {
-        "cpu_ghz": 39.57447422532273,
-        "memory_gb": 30.085541486828838,
-        "ram_gb": 4
-      },
-      "id": "Cloud_Task_5"
-    },
-    {
-      "type": "CloudTask",
-      "region": "eu-west-2",
-      "computational_requirements": {
-        "cpu_ghz": 40.814281763069815,
-        "memory_gb": 9.347349365678147,
+        "cpu_ghz": 38.01305794602113,
+        "memory_gb": 10.88487078093059,
         "ram_gb": 2
       },
-      "id": "Cloud_Task_6"
+      "id": "Fog_Task_1"
     },
     {
-      "type": "CloudTask",
-      "region": "eu-central-1",
+      "type": "FogTask",
+      "region": "Asia",
       "computational_requirements": {
-        "cpu_ghz": 37.86034603985933,
-        "memory_gb": 10.099593582766346,
-        "ram_gb": 4
+        "cpu_ghz": 45.08981417711487,
+        "memory_gb": 9.413097638571804,
+        "ram_gb": 8
       },
-      "id": "Cloud_Task_7"
+      "id": "Fog_Task_2"
     },
     {
-      "type": "CloudTask",
-      "region": "eu-west-3",
+      "type": "FogTask",
+      "region": "Asia",
       "computational_requirements": {
-        "cpu_ghz": 39.70233791837619,
-        "memory_gb": 15.953192868739972,
+        "cpu_ghz": 43.22864137351763,
+        "memory_gb": 13.648110523383599,
         "ram_gb": 4
       },
-      "id": "Cloud_Task_8"
+      "id": "Fog_Task_3"
     },
     {
-      "type": "CloudTask",
-      "region": "eu-west-3",
+      "type": "FogTask",
+      "region": "Middle East",
       "computational_requirements": {
-        "cpu_ghz": 44.46735662765886,
-        "memory_gb": 14.872596284320208,
-        "ram_gb": 4
+        "cpu_ghz": 45.68910922467741,
+        "memory_gb": 15.953857066746506,
+        "ram_gb": 2
       },
-      "id": "Cloud_Task_9"
+      "id": "Fog_Task_4"
+    },
+    {
+      "type": "FogTask",
+      "region": "South America",
+      "computational_requirements": {
+        "cpu_ghz": 39.11637722557723,
+        "memory_gb": 27.019340569686133,
+        "ram_gb": 32
+      },
+      "id": "Fog_Task_5"
     }
   ],
   "links": [
     {
-      "latency_ms": 92.82924863491914,
-      "bandwidth_mbps": 6.1902620581994166,
-      "distance_km": 940.8811145236327,
-      "source": "Cloud_Task_0",
-      "target": "Edge_Task_0"
-    },
-    {
-      "latency_ms": 99.24060642635354,
-      "bandwidth_mbps": 2.032098368276967,
-      "distance_km": 625.8224582288852,
-      "source": "Cloud_Task_0",
-      "target": "Edge_Task_3"
-    },
-    {
-      "latency_ms": 74.5877897064293,
-      "bandwidth_mbps": 6.727424115460776,
-      "distance_km": 744.1469775571354,
-      "source": "Cloud_Task_0",
-      "target": "Edge_Task_1"
-    },
-    {
-      "latency_ms": 68.7062936711756,
-      "bandwidth_mbps": 2.327809532695076,
-      "distance_km": 545.5400507305364,
-      "source": "Cloud_Task_0",
-      "target": "Edge_Task_2"
-    },
-    {
-      "latency_ms": 84.77236685105517,
-      "bandwidth_mbps": 8.242293684544096,
-      "distance_km": 747.342240408718,
+      "latency_ms": 75.87427782570813,
+      "bandwidth_mbps": 2.20526344361673,
+      "distance_km": 984.576584413411,
       "source": "Cloud_Task_1",
-      "target": "Edge_Task_4"
+      "target": "Fog_Task_5"
     },
     {
-      "latency_ms": 64.36358924612064,
-      "bandwidth_mbps": 4.8385398762257195,
-      "distance_km": 590.6981719147393,
+      "latency_ms": 67.62556014741833,
+      "bandwidth_mbps": 8.861602978584862,
+      "distance_km": 563.4452886696434,
       "source": "Cloud_Task_1",
-      "target": "Edge_Task_0"
+      "target": "Fog_Task_3"
     },
     {
-      "latency_ms": 96.70258116590506,
-      "bandwidth_mbps": 6.034657939748654,
-      "distance_km": 593.9537503434733,
+      "latency_ms": 60.23170643453133,
+      "bandwidth_mbps": 4.6356582312099395,
+      "distance_km": 535.1753743652863,
       "source": "Cloud_Task_1",
-      "target": "Edge_Task_3"
+      "target": "Fog_Task_1"
     },
     {
-      "latency_ms": 76.9256028297908,
-      "bandwidth_mbps": 8.156105387324127,
-      "distance_km": 851.6454710700291,
+      "latency_ms": 78.54686598780373,
+      "bandwidth_mbps": 1.735555418301598,
+      "distance_km": 748.4430080166824,
       "source": "Cloud_Task_1",
-      "target": "Edge_Task_2"
+      "target": "Fog_Task_2"
     },
     {
-      "latency_ms": 84.1637205456941,
-      "bandwidth_mbps": 4.289172882374359,
-      "distance_km": 577.2471297867248,
+      "latency_ms": 73.40742958523626,
+      "bandwidth_mbps": 6.9797475167385565,
+      "distance_km": 898.9276086024975,
       "source": "Cloud_Task_1",
-      "target": "Edge_Task_1"
+      "target": "Fog_Task_4"
     },
     {
-      "latency_ms": 87.0755421413333,
-      "bandwidth_mbps": 2.988060985829348,
-      "distance_km": 957.7806187965609,
+      "latency_ms": 67.67859197437765,
+      "bandwidth_mbps": 7.311452614950591,
+      "distance_km": 639.7912812298225,
       "source": "Cloud_Task_2",
-      "target": "Edge_Task_0"
+      "target": "Fog_Task_4"
     },
     {
-      "latency_ms": 84.90117024027904,
-      "bandwidth_mbps": 7.934191827778547,
-      "distance_km": 949.7280418337335,
-      "source": "Cloud_Task_2",
-      "target": "Edge_Task_3"
-    },
-    {
-      "latency_ms": 66.83822654601435,
-      "bandwidth_mbps": 2.903711370146501,
-      "distance_km": 641.6268359838455,
+      "latency_ms": 87.4171408215295,
+      "bandwidth_mbps": 5.654376330272549,
+      "distance_km": 859.8357038197915,
       "source": "Cloud_Task_3",
-      "target": "Edge_Task_1"
+      "target": "Fog_Task_1"
     },
     {
-      "latency_ms": 96.15324594627239,
-      "bandwidth_mbps": 5.353913449318467,
-      "distance_km": 881.6767492282308,
+      "latency_ms": 77.37536332429228,
+      "bandwidth_mbps": 3.575373344630364,
+      "distance_km": 570.5269349473733,
       "source": "Cloud_Task_3",
-      "target": "Edge_Task_2"
+      "target": "Fog_Task_4"
     },
     {
-      "latency_ms": 57.83952131981576,
-      "bandwidth_mbps": 6.294902013200915,
-      "distance_km": 518.9041840419858,
-      "source": "Cloud_Task_4",
+      "latency_ms": 98.728516104001,
+      "bandwidth_mbps": 1.8282274971965848,
+      "distance_km": 508.32632857417866,
+      "source": "Cloud_Task_3",
+      "target": "Fog_Task_3"
+    },
+    {
+      "latency_ms": 81.94859225659464,
+      "bandwidth_mbps": 6.520676302074737,
+      "distance_km": 737.2585027374197,
+      "source": "Cloud_Task_3",
+      "target": "Fog_Task_2"
+    },
+    {
+      "latency_ms": 54.076497086833356,
+      "bandwidth_mbps": 3.8704022232105384,
+      "distance_km": 751.040934784545,
+      "source": "Cloud_Task_3",
+      "target": "Fog_Task_5"
+    },
+    {
+      "latency_ms": 75.45211776551577,
+      "bandwidth_mbps": 2.795747424183077,
+      "distance_km": 771.5429317822466,
+      "source": "Fog_Task_1",
+      "target": "Edge_Task_9"
+    },
+    {
+      "latency_ms": 84.70716295417355,
+      "bandwidth_mbps": 5.657726992997819,
+      "distance_km": 342.2248569873892,
+      "source": "Fog_Task_1",
+      "target": "Edge_Task_6"
+    },
+    {
+      "latency_ms": 58.799104328983105,
+      "bandwidth_mbps": 3.8514111089207543,
+      "distance_km": 660.6428699533602,
+      "source": "Fog_Task_2",
+      "target": "Edge_Task_10"
+    },
+    {
+      "latency_ms": 83.32744692105442,
+      "bandwidth_mbps": 6.349093842783404,
+      "distance_km": 579.402504994363,
+      "source": "Fog_Task_2",
       "target": "Edge_Task_3"
     },
     {
-      "latency_ms": 76.952711475938,
-      "bandwidth_mbps": 8.225357677746047,
-      "distance_km": 945.687089989384,
-      "source": "Cloud_Task_4",
+      "latency_ms": 94.35079877608467,
+      "bandwidth_mbps": 9.039563732408658,
+      "distance_km": 575.6306502863981,
+      "source": "Fog_Task_2",
       "target": "Edge_Task_2"
     },
     {
-      "latency_ms": 65.68953790403769,
-      "bandwidth_mbps": 5.569101094551144,
-      "distance_km": 533.8098051682719,
-      "source": "Cloud_Task_4",
-      "target": "Edge_Task_4"
+      "latency_ms": 65.79318601115371,
+      "bandwidth_mbps": 6.3904979039870655,
+      "distance_km": 231.90930670068815,
+      "source": "Fog_Task_2",
+      "target": "Edge_Task_8"
     },
     {
-      "latency_ms": 79.27260772060099,
-      "bandwidth_mbps": 7.633306098100779,
-      "distance_km": 708.6970627619852,
-      "source": "Cloud_Task_5",
-      "target": "Edge_Task_3"
+      "latency_ms": 75.76120410873511,
+      "bandwidth_mbps": 2.2939307425848554,
+      "distance_km": 719.0830956987332,
+      "source": "Fog_Task_2",
+      "target": "Edge_Task_6"
     },
     {
-      "latency_ms": 58.91431197924115,
-      "bandwidth_mbps": 2.1876716137478582,
-      "distance_km": 768.776298916638,
-      "source": "Cloud_Task_5",
-      "target": "Edge_Task_0"
+      "latency_ms": 61.85199820506243,
+      "bandwidth_mbps": 8.427771968616357,
+      "distance_km": 297.5785457052663,
+      "source": "Fog_Task_2",
+      "target": "Edge_Task_5"
     },
     {
-      "latency_ms": 87.82123660357288,
-      "bandwidth_mbps": 7.562451792245641,
-      "distance_km": 992.4389441119233,
-      "source": "Cloud_Task_6",
-      "target": "Edge_Task_2"
+      "latency_ms": 97.43031414501048,
+      "bandwidth_mbps": 9.04509549681244,
+      "distance_km": 854.091604917254,
+      "source": "Fog_Task_2",
+      "target": "Edge_Task_9"
     },
     {
-      "latency_ms": 69.63544086317711,
-      "bandwidth_mbps": 7.476969742741386,
-      "distance_km": 941.3181162060474,
-      "source": "Cloud_Task_7",
-      "target": "Edge_Task_4"
+      "latency_ms": 60.66627974005888,
+      "bandwidth_mbps": 4.794540753719191,
+      "distance_km": 388.4870491945968,
+      "source": "Fog_Task_2",
+      "target": "Edge_Task_12"
     },
     {
-      "latency_ms": 74.4053903074005,
-      "bandwidth_mbps": 9.886131546281007,
-      "distance_km": 687.292180884134,
-      "source": "Cloud_Task_7",
-      "target": "Edge_Task_0"
-    },
-    {
-      "latency_ms": 99.56020963128843,
-      "bandwidth_mbps": 6.116191432474479,
-      "distance_km": 576.5007589910551,
-      "source": "Cloud_Task_7",
-      "target": "Edge_Task_3"
-    },
-    {
-      "latency_ms": 70.2700169445113,
-      "bandwidth_mbps": 9.897664636401647,
-      "distance_km": 742.9360512027303,
-      "source": "Cloud_Task_7",
+      "latency_ms": 98.3265160000243,
+      "bandwidth_mbps": 5.08525952839292,
+      "distance_km": 745.3704749451695,
+      "source": "Fog_Task_2",
       "target": "Edge_Task_1"
     },
     {
-      "latency_ms": 84.3783568561231,
-      "bandwidth_mbps": 8.086132152702092,
-      "distance_km": 841.3106353546449,
-      "source": "Cloud_Task_8",
-      "target": "Edge_Task_0"
+      "latency_ms": 42.87759307049567,
+      "bandwidth_mbps": 5.946344535164138,
+      "distance_km": 362.2662272579258,
+      "source": "Fog_Task_2",
+      "target": "Edge_Task_11"
     },
     {
-      "latency_ms": 95.71417748365789,
-      "bandwidth_mbps": 3.6053098741110805,
-      "distance_km": 708.3532389306226,
-      "source": "Cloud_Task_8",
-      "target": "Edge_Task_2"
-    },
-    {
-      "latency_ms": 56.181151131482295,
-      "bandwidth_mbps": 6.823386578193773,
-      "distance_km": 871.0779709616127,
-      "source": "Cloud_Task_8",
+      "latency_ms": 43.91087466099134,
+      "bandwidth_mbps": 1.2869385672641014,
+      "distance_km": 243.88416397796647,
+      "source": "Fog_Task_3",
       "target": "Edge_Task_3"
     },
     {
-      "latency_ms": 55.62518558088399,
-      "bandwidth_mbps": 8.456145482929003,
-      "distance_km": 923.6219543861193,
-      "source": "Cloud_Task_8",
+      "latency_ms": 57.285029598270015,
+      "bandwidth_mbps": 1.997629069079799,
+      "distance_km": 287.1029836256808,
+      "source": "Fog_Task_3",
+      "target": "Edge_Task_8"
+    },
+    {
+      "latency_ms": 73.0391903095722,
+      "bandwidth_mbps": 9.07897099128216,
+      "distance_km": 537.8284826389347,
+      "source": "Fog_Task_3",
+      "target": "Edge_Task_10"
+    },
+    {
+      "latency_ms": 54.98824263796865,
+      "bandwidth_mbps": 4.368018888526763,
+      "distance_km": 721.3309304892805,
+      "source": "Fog_Task_3",
+      "target": "Edge_Task_12"
+    },
+    {
+      "latency_ms": 49.25238381127116,
+      "bandwidth_mbps": 8.277985776055903,
+      "distance_km": 238.83263649063383,
+      "source": "Fog_Task_4",
+      "target": "Edge_Task_5"
+    },
+    {
+      "latency_ms": 87.31777431761567,
+      "bandwidth_mbps": 6.66457720164261,
+      "distance_km": 495.77528981761236,
+      "source": "Fog_Task_4",
+      "target": "Edge_Task_9"
+    },
+    {
+      "latency_ms": 68.35506384117788,
+      "bandwidth_mbps": 5.6717112235522364,
+      "distance_km": 418.10440274720673,
+      "source": "Fog_Task_4",
       "target": "Edge_Task_4"
     },
     {
-      "latency_ms": 61.96965054115863,
-      "bandwidth_mbps": 7.284180691691847,
-      "distance_km": 671.8976463308467,
-      "source": "Cloud_Task_8",
-      "target": "Edge_Task_1"
+      "latency_ms": 90.033165469319,
+      "bandwidth_mbps": 3.4910800448668606,
+      "distance_km": 898.136982334343,
+      "source": "Fog_Task_4",
+      "target": "Edge_Task_8"
     },
     {
-      "latency_ms": 58.03943061950523,
-      "bandwidth_mbps": 2.803161504362481,
-      "distance_km": 522.6344933036044,
-      "source": "Cloud_Task_9",
-      "target": "Edge_Task_4"
+      "latency_ms": 71.81561194103614,
+      "bandwidth_mbps": 1.168998987185244,
+      "distance_km": 737.8522111251478,
+      "source": "Fog_Task_4",
+      "target": "Edge_Task_6"
     },
     {
-      "latency_ms": 76.37791709000122,
-      "bandwidth_mbps": 8.063835270157785,
-      "distance_km": 895.7405734897809,
-      "source": "Cloud_Task_9",
-      "target": "Edge_Task_0"
+      "latency_ms": 45.602303494736496,
+      "bandwidth_mbps": 1.5780137578768443,
+      "distance_km": 325.6516914108485,
+      "source": "Fog_Task_4",
+      "target": "Edge_Task_10"
     },
     {
-      "latency_ms": 68.32164827149272,
-      "bandwidth_mbps": 3.5117965352737466,
-      "distance_km": 959.7259106501042,
-      "source": "Cloud_Task_9",
-      "target": "Edge_Task_3"
+      "latency_ms": 79.34982997542637,
+      "bandwidth_mbps": 6.233748968440571,
+      "distance_km": 372.58030198147986,
+      "source": "Fog_Task_4",
+      "target": "Edge_Task_7"
     },
     {
-      "latency_ms": 85.0699199194309,
-      "bandwidth_mbps": 7.641680481761698,
-      "distance_km": 546.7077068621841,
-      "source": "Cloud_Task_9",
+      "latency_ms": 91.17228947562187,
+      "bandwidth_mbps": 1.1841526598626135,
+      "distance_km": 544.5188214037822,
+      "source": "Fog_Task_5",
       "target": "Edge_Task_2"
     },
     {
-      "latency_ms": 75.50729046041872,
-      "bandwidth_mbps": 1.3034464227470708,
-      "distance_km": 782.1373016207308,
-      "source": "Cloud_Task_9",
-      "target": "Edge_Task_1"
+      "latency_ms": 46.507558332701365,
+      "bandwidth_mbps": 9.19685783925933,
+      "distance_km": 253.93395288311166,
+      "source": "Fog_Task_5",
+      "target": "Edge_Task_11"
+    },
+    {
+      "latency_ms": 45.7514247934659,
+      "bandwidth_mbps": 8.930141994199948,
+      "distance_km": 235.84092195238196,
+      "source": "Fog_Task_5",
+      "target": "Edge_Task_9"
     }
   ]
 }

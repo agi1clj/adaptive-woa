@@ -1,17 +1,27 @@
-description: "Large config for generating a DAG for Cloud-Edge offloading"
+description: "Large config for generating a DAG for Edge-Fog-Cloud offloading"
 
 cloud:
-  number: 125
+  number: 20
   computational:
     cpu_ghz_range: [30, 50]
     memory_gb_range: [8, 32]
   links:
-    latency_ms_range: [50, 100] 
+    latency_ms_range: [50, 100]
     bandwidth_mbps_range: [1, 10]
-    distance_km_range: [500, 1000] # 2 scenarii, variatie
+    distance_km_range: [500, 1000]
+
+fog:
+  number: 35
+  computational:
+    cpu_ghz_range: [30, 50]
+    memory_gb_range: [8, 32]
+  links:
+    latency_ms_range: [40, 100]
+    bandwidth_mbps_range: [1, 10]
+    distance_km_range: [200, 1000]
 
 edge:
-  number: 60
+  number: 50
   computational:
     cpu_ghz_range: [30, 50]
     memory_gb_range: [8, 32]

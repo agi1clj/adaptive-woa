@@ -13,22 +13,18 @@ def load_configuration(file_path):
 
 
 def set_node_properties(dag):
-    return {
-        node: (
-            f"{node}, Type: {dag.nodes[node]['type']}, Region: {dag.nodes[node]['region']}, "
-            f"CPU: {dag.nodes[node]['computational_requirements']['cpu_ghz']:.2f} GHz, "
-            f"Memory: {dag.nodes[node]['computational_requirements']['memory_gb']:.2f} GB, "
-            f"Ram: {dag.nodes[node]['computational_requirements']['ram_gb']:.2f} GB"
+    properties = {}
+    for node in dag.nodes:
+        node_data = dag.nodes[node]
+        node_type = node_data["type"]
+        comp_req = node_data["computational_requirements"]
+        properties[node] = (
+            f"{node}, Type: {node_type}, Region: {node_data['region']}, "
+            f"CPU: {comp_req['cpu_ghz']:.2f} GHz, "
+            f"Memory: {comp_req['memory_gb']:.2f} GB, "
+            f"Ram: {comp_req['ram_gb']:.2f} GB"
         )
-        if dag.nodes[node]["type"] == "CloudTask"
-        else (
-            f"{node}, Type: {dag.nodes[node]['type']}, Region: {dag.nodes[node]['region']}, "
-            f"CPU: {dag.nodes[node]['computational_capacity']['cpu_ghz']:.2f} GHz, "
-            f"Memory: {dag.nodes[node]['computational_capacity']['memory_gb']:.2f} GB, "
-            f"Ram: {dag.nodes[node]['computational_capacity']['ram_gb']:.2f} GB"
-        )
-        for node in dag.nodes
-    }
+    return properties
 
 
 def set_edge_properties(dag):
@@ -43,7 +39,11 @@ def set_edge_properties(dag):
 def add_nodes_to_graph(g, node_properties):
     for node, properties in node_properties.items():
         node_type = dag.nodes[node]["type"]
-        color = "green" if node_type == "EdgeTask" else "blue"
+        color = {
+            "EdgeTask": "orange",
+            "FogTask": "green",
+            "CloudTask": "blue",
+        }.get(node_type)
         g.add_node(node, title=properties, color=color)
 
 
@@ -82,6 +82,8 @@ for config_file in config_files:
     edge_properties = set_edge_properties(dag)
 
     g = Network(notebook=True)
+    g.height = '1080px'
+
     g.force_atlas_2based()
 
     # Add nodes and edges
