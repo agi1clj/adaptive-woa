@@ -84,14 +84,20 @@ def generate_dag_from_config(config):
         config=config["fog"]["computational"],
     )
 
-    dag.add_nodes_from(list(edge_tasks.items()) + list(cloud_tasks.items()) + list(fog_tasks.items()))
+    dag.add_nodes_from(
+        list(edge_tasks.items()) + list(cloud_tasks.items()) + list(fog_tasks.items())
+    )
 
     # Generate edges from cloud to fog
-    cloud_fog_edges = generate_edges_from_config(cloud_tasks, fog_tasks, config['cloud']['links'])
+    cloud_fog_edges = generate_edges_from_config(
+        cloud_tasks, fog_tasks, config["cloud"]["links"]
+    )
     dag.add_edges_from(cloud_fog_edges)
 
     # Generate edges from fog to edge
-    fog_edge_edges = generate_edges_from_config(fog_tasks, edge_tasks, config['fog']['links'])
+    fog_edge_edges = generate_edges_from_config(
+        fog_tasks, edge_tasks, config["fog"]["links"]
+    )
     dag.add_edges_from(fog_edge_edges)
 
     return dag

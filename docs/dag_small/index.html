@@ -47,7 +47,7 @@
         })
         .catch(error => console.error('Error fetching JSON:', error));
 
-    fetch('./algo/cloud_offloading_results.json')
+    fetch('./algo/offloading_results.json')
         .then(response => response.text())
         .then(data => {
             document.getElementById('output-content').innerText = data;

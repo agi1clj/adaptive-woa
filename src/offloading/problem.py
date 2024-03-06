@@ -3,7 +3,7 @@ import numpy as np
 from mealpy import BinaryVar, WOA, Problem
 
 
-class CloudToEdgeOffloadingProblem(Problem):
+class OffloadingProblem(Problem):
     def __init__(
         self,
         nodes,
@@ -14,17 +14,22 @@ class CloudToEdgeOffloadingProblem(Problem):
         # DAG Graph data
         self.nodes = nodes["nodes"]
         self.cloud_nodes = self.extract_cloud_tasks(nodes)
-        self.cloud_nodes_results = defaultdict(lambda: {"links": defaultdict(dict)})
+        self.nodes_results = defaultdict(lambda: {"links": defaultdict(dict)})
         self.edge_nodes = self.extract_edge_tasks(nodes)
+        self.fog_nodes = self.extract_fog_tasks(nodes)
         self.threshold_rtt = threshold_rtt
         self.threshold_comp_euclidean_dist = threshold_comp_euclidean_dist
         self.links = nodes["links"]
+        self.total_distance = 0
+        self.total_rtt = 0
 
         # Penalties
         self.threshold_penalty_factor = threshold_penalty_factor
 
-        bounds = BinaryVar(n_vars=len(self.cloud_nodes), name="cloud_offloading_var")
-        super().__init__(bounds=bounds, minmax="max", save_population=True)
+        bounds = BinaryVar(
+            n_vars=len(self.cloud_nodes + self.fog_nodes), name="offloading_var"
+        )
+        super().__init__(bounds=bounds, minmax="max", save_population=True, obj_weights=[0.5, 0.5]  )
 
     @staticmethod
     def extract_cloud_tasks(nodes_data):
@@ -43,6 +48,14 @@ class CloudToEdgeOffloadingProblem(Problem):
         ]
 
     @staticmethod
+    def extract_fog_tasks(nodes_data):
+        return [
+            node
+            for node in nodes_data.get("nodes", [])
+            if node.get("type") == "FogTask"
+        ]
+
+    @staticmethod
     def calculate_rtt(bandwidth_mbps, latency_ms, distance_km):
         distance_meters = distance_km * 1000
         bandwidth_bps = bandwidth_mbps * 1e6
@@ -58,69 +71,83 @@ class CloudToEdgeOffloadingProblem(Problem):
         return total_delay_ms
 
     @staticmethod
-    def calculate_comp_euclidean_dist(cloud_task, edge_task):
+    def calculate_comp_euclidean_dist(source_task, target_task):
         cpu_distance = abs(
-            cloud_task["computational_requirements"]["cpu_ghz"]
-            - edge_task["computational_capacity"]["cpu_ghz"]
+            source_task["computational_requirements"]["cpu_ghz"]
+            - target_task["computational_requirements"]["cpu_ghz"]
         )
         mem_distance = abs(
-            cloud_task["computational_requirements"]["memory_gb"]
-            - edge_task["computational_capacity"]["memory_gb"]
+            source_task["computational_requirements"]["memory_gb"]
+            - target_task["computational_requirements"]["memory_gb"]
         )
         ram_distance = abs(
-            cloud_task["computational_requirements"]["ram_gb"]
-            - edge_task["computational_capacity"]["ram_gb"]
+            source_task["computational_requirements"]["ram_gb"]
+            - target_task["computational_requirements"]["ram_gb"]
         )
         return np.sqrt(cpu_distance**2 + mem_distance**2 + ram_distance**2)
 
-    def obj_func(self, x):
-        x_decoded = self.decode_solution(x)
-        offloading_var = x_decoded["cloud_offloading_var"]
-        total_rtt, total_distance = 0, 0  # Initialize total RTT and distance penalties
-
-        for i, cloud_node in enumerate(self.cloud_nodes):
+    def calculate_offloading(
+        self, offloading_var, offloading_nodes, target_nodes
+    ):
+        local_total_rtt, local_total_distance = 0, 0
+        for i, offloading_node in enumerate(offloading_nodes):
             if offloading_var[i] == 1:
                 relevant_links = [
-                    link for link in self.links if link["source"] == cloud_node["id"]
-                ]
+                    link
+                    for link in self.links
+                    if link["source"] == offloading_node["id"]
+                ]           
                 for link in relevant_links:
-                    target_edge_node = [
-                        edge_node
-                        for edge_node in self.edge_nodes
-                        if edge_node["id"] == link["target"]
+                    target_nodes_local = [
+                        target_node
+                        for target_node in target_nodes
+                        if target_node["id"] == link["target"]
                     ][0]
                     link_rtt = self.calculate_rtt(
                         link["bandwidth_mbps"], link["latency_ms"], link["distance_km"]
                     )
                     link_distance = self.calculate_comp_euclidean_dist(
-                        cloud_node, target_edge_node
+                        offloading_node, target_nodes_local
                     )
-                    self.cloud_nodes_results[cloud_node["id"]]["links"][
-                        target_edge_node["id"]
+                    self.nodes_results[offloading_node["id"]]["links"][
+                        target_nodes_local["id"]
                     ] = {"comp_euclidean_dist": link_distance, "rtt": link_rtt}
 
                     # Penalty for RTT
                     if link_rtt > self.threshold_rtt:
-                        total_rtt += self.threshold_penalty_factor * (
+                        local_total_rtt += self.threshold_penalty_factor * (
                             link_rtt - self.threshold_rtt
                         )
                     else:
-                        total_rtt += link_rtt
+                        local_total_rtt += link_rtt
 
                     # Penalty for euclidean distance
                     if link_distance > self.threshold_comp_euclidean_dist:
-                        total_distance += self.threshold_penalty_factor * (
+                        local_total_distance += self.threshold_penalty_factor * (
                             link_distance - self.threshold_comp_euclidean_dist
                         )
                     else:
-                        total_distance += link_distance
+                        local_total_distance += link_distance
+        return local_total_rtt, local_total_distance    
+    
+    def obj_func(self, x):
+        x_decoded = self.decode_solution(x)
+        offloading_var = x_decoded["offloading_var"]
+        # Cloud to Fog Offloading
+        cloud_total_rtt, cloud_total_distance = self.calculate_offloading(
+            offloading_var, self.cloud_nodes, self.fog_nodes
+        )
 
-        fitness = total_rtt + total_distance
-        return fitness
+        # Fog to Edge offloading
+        fog_total_rtt, fog_total_distance = self.calculate_offloading(
+            offloading_var, self.fog_nodes, self.edge_nodes,
+        )
+
+        return [cloud_total_rtt + cloud_total_distance, fog_total_rtt + fog_total_distance]
 
 
-def solve_cloud_to_edge_offloading(nodes_data, config_algo_data):
-    problem = CloudToEdgeOffloadingProblem(
+def offloading(nodes_data, config_algo_data):
+    problem = OffloadingProblem(
         nodes_data,
         threshold_rtt=config_algo_data["threshold_rtt"],
         threshold_comp_euclidean_dist=config_algo_data["threshold_comp_euclidean_dist"],

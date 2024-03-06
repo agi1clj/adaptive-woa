@@ -82,9 +82,11 @@ for config_file in config_files:
     edge_properties = set_edge_properties(dag)
 
     g = Network(notebook=True)
-    g.height = '1080px'
+    g.height = "1080px;"
 
     g.force_atlas_2based()
+    # g.toggle_physics(False)
+
 
     # Add nodes and edges
     add_nodes_to_graph(g, node_properties)

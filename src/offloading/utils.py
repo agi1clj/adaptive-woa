@@ -8,48 +8,46 @@ def load_dag_graph(file_path):
 
 
 def generate_output_data(problem, model, output_folder):
-    cloud_offloading_var = problem.decode_solution(model.g_best.solution)[
-        "cloud_offloading_var"
-    ]
-    cloud_tasks_to_shift = [
-        cloud_node["id"]
-        for i, cloud_node in enumerate(problem.cloud_nodes)
-        if cloud_offloading_var[i] == 1
+    offloading_var = problem.decode_solution(model.g_best.solution)["offloading_var"]
+    tasks_to_shift = [
+        offloading_node["id"]
+        for i, offloading_node in enumerate(problem.cloud_nodes + problem.fog_nodes)
+        if offloading_var[i] == 1
     ]
 
-    cloud_tasks_to_shift_details = []
 
-    for task_id in cloud_tasks_to_shift:
-        cloud_task_links = problem.cloud_nodes_results.get(task_id, {}).get("links", {})
+    tasks_to_shift_details = []
 
+    for task_id in tasks_to_shift:
+        task_links = problem.nodes_results.get(task_id, {}).get("links", {})
         # Find the best edge node based on both comp euclidean dist and rtt
-        best_edge_node = min(
-            cloud_task_links.keys(),
-            key=lambda edge_task: (
-                cloud_task_links[edge_task]["comp_euclidean_dist"],
-                cloud_task_links[edge_task]["rtt"],
+        best_node = min(
+            task_links.keys(),
+            key=lambda task: (
+                task_links[task]["comp_euclidean_dist"],
+                task_links[task]["rtt"],
             ),
         )
 
-        cloud_tasks_to_shift_details.append(
+        tasks_to_shift_details.append(
             {
-                "cloud_task_id": task_id,
-                "best_edge_node": best_edge_node,
-                "details": cloud_task_links[best_edge_node],
+                "task_id": task_id,
+                "best_node": best_node,
+                "details": task_links[best_node],
             }
         )
 
     output_data = {
         "offloading_decision": {
-            "cloud_tasks_total_number": len(problem.cloud_nodes),
-            "cloud_tasks_total_number_to_shift": len(cloud_tasks_to_shift),
-            "cloud_tasks_to_shift_from_cloud_to_edge": cloud_tasks_to_shift,
-            "cloud_tasks_to_shift_details": cloud_tasks_to_shift_details,
+            "tasks_total_number": len(problem.cloud_nodes + problem.fog_nodes),
+            "tasks_number_to_offload": len(tasks_to_shift),
+            "tasks_to_offload": tasks_to_shift,
+            "tasks_to_offload_details": tasks_to_shift_details,
         },
-        "offloading_debug": problem.cloud_nodes_results,
+        "offloading_debug": problem.nodes_results,
     }
 
-    with open(f"{output_folder}cloud_offloading_results.json", "w") as results_file:
+    with open(f"{output_folder}offloading_results.json", "w") as results_file:
         json.dump(output_data, results_file, indent=2)
 
 

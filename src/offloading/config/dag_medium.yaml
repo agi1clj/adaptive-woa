@@ -1,9 +1,9 @@
-description: "Medium config for shifting tasks from Cloud to Edge"
+description: "Medium config for shifting tasks within Edge-Fog-Cloud computing"
 algo:
   threshold_comp_euclidean_dist: 10
   threshold_rtt: 90
   threshold_penalty_factor: -6
-  epoch: 2200 
+  epoch: 500 
   pop_size: 20
 dag:
   file_path: "docs/dag_medium/dag_model.json"
