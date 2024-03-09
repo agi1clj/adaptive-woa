@@ -18,8 +18,8 @@ def load_configuration(file_path):
 if __name__ == "__main__":
     config_files = [
         "src/offloading/config/dag_small.yaml",
-       # "src/offloading/config/dag_medium.yaml",
-        # "src/offloading/config/dag_large.yaml",
+        "src/offloading/config/dag_medium.yaml",
+        "src/offloading/config/dag_large.yaml",
     ]
     for config_file in config_files:
         config_yaml = load_configuration(config_file)

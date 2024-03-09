@@ -13,10 +13,10 @@ class OffloadingProblem(Problem):
     ):
         # DAG Graph data
         self.nodes = nodes["nodes"]
-        self.cloud_nodes = self.extract_cloud_tasks(nodes)
+        self.cloud_nodes = self.extract_cloud_nodes(nodes)
         self.nodes_results = defaultdict(lambda: {"links": defaultdict(dict)})
-        self.edge_nodes = self.extract_edge_tasks(nodes)
-        self.fog_nodes = self.extract_fog_tasks(nodes)
+        self.edge_nodes = self.extract_edge_nodes(nodes)
+        self.fog_nodes = self.extract_fog_nodes(nodes)
         self.threshold_rtt = threshold_rtt
         self.threshold_comp_euclidean_dist = threshold_comp_euclidean_dist
         self.links = nodes["links"]
@@ -32,27 +32,27 @@ class OffloadingProblem(Problem):
         super().__init__(bounds=bounds, minmax="max", save_population=True, obj_weights=[0.5, 0.5]  )
 
     @staticmethod
-    def extract_cloud_tasks(nodes_data):
+    def extract_cloud_nodes(nodes_data):
         return [
             node
             for node in nodes_data.get("nodes", [])
-            if node.get("type") == "CloudTask"
+            if node.get("type") == "CloudNode"
         ]
 
     @staticmethod
-    def extract_edge_tasks(nodes_data):
+    def extract_edge_nodes(nodes_data):
         return [
             node
             for node in nodes_data.get("nodes", [])
-            if node.get("type") == "EdgeTask"
+            if node.get("type") == "EdgeNode"
         ]
 
     @staticmethod
-    def extract_fog_tasks(nodes_data):
+    def extract_fog_nodes(nodes_data):
         return [
             node
             for node in nodes_data.get("nodes", [])
-            if node.get("type") == "FogTask"
+            if node.get("type") == "FogNode"
         ]
 
     @staticmethod
@@ -71,18 +71,18 @@ class OffloadingProblem(Problem):
         return total_delay_ms
 
     @staticmethod
-    def calculate_comp_euclidean_dist(source_task, target_task):
+    def calculate_comp_euclidean_dist(source_node, target_node):
         cpu_distance = abs(
-            source_task["computational_requirements"]["cpu_ghz"]
-            - target_task["computational_requirements"]["cpu_ghz"]
+            source_node["computational_requirements"]["cpu_ghz"]
+            - target_node["computational_requirements"]["cpu_ghz"]
         )
         mem_distance = abs(
-            source_task["computational_requirements"]["memory_gb"]
-            - target_task["computational_requirements"]["memory_gb"]
+            source_node["computational_requirements"]["memory_gb"]
+            - target_node["computational_requirements"]["memory_gb"]
         )
         ram_distance = abs(
-            source_task["computational_requirements"]["ram_gb"]
-            - target_task["computational_requirements"]["ram_gb"]
+            source_node["computational_requirements"]["ram_gb"]
+            - target_node["computational_requirements"]["ram_gb"]
         )
         return np.sqrt(cpu_distance**2 + mem_distance**2 + ram_distance**2)
 
@@ -133,17 +133,11 @@ class OffloadingProblem(Problem):
     def obj_func(self, x):
         x_decoded = self.decode_solution(x)
         offloading_var = x_decoded["offloading_var"]
-        # Cloud to Fog Offloading
-        cloud_total_rtt, cloud_total_distance = self.calculate_offloading(
-            offloading_var, self.cloud_nodes, self.fog_nodes
+        total_rtt, total_distance = self.calculate_offloading(
+            offloading_var, self.cloud_nodes + self.fog_nodes, self.fog_nodes + self.edge_nodes
         )
-
-        # Fog to Edge offloading
-        fog_total_rtt, fog_total_distance = self.calculate_offloading(
-            offloading_var, self.fog_nodes, self.edge_nodes,
-        )
-
-        return [cloud_total_rtt + cloud_total_distance, fog_total_rtt + fog_total_distance]
+        fitness = total_rtt + total_distance
+        return fitness
 
 
 def offloading(nodes_data, config_algo_data):

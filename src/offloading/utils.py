@@ -9,40 +9,40 @@ def load_dag_graph(file_path):
 
 def generate_output_data(problem, model, output_folder):
     offloading_var = problem.decode_solution(model.g_best.solution)["offloading_var"]
-    tasks_to_shift = [
+    nodes_to_shift = [
         offloading_node["id"]
         for i, offloading_node in enumerate(problem.cloud_nodes + problem.fog_nodes)
         if offloading_var[i] == 1
     ]
 
 
-    tasks_to_shift_details = []
+    nodes_to_shift_details = []
 
-    for task_id in tasks_to_shift:
-        task_links = problem.nodes_results.get(task_id, {}).get("links", {})
+    for node_id in nodes_to_shift:
+        node_links = problem.nodes_results.get(node_id, {}).get("links", {})
         # Find the best edge node based on both comp euclidean dist and rtt
         best_node = min(
-            task_links.keys(),
-            key=lambda task: (
-                task_links[task]["comp_euclidean_dist"],
-                task_links[task]["rtt"],
+            node_links.keys(),
+            key=lambda node: (
+                node_links[node]["comp_euclidean_dist"],
+                node_links[node]["rtt"],
             ),
         )
 
-        tasks_to_shift_details.append(
+        nodes_to_shift_details.append(
             {
-                "task_id": task_id,
+                "node_id": node_id,
                 "best_node": best_node,
-                "details": task_links[best_node],
+                "details": node_links[best_node],
             }
         )
 
     output_data = {
         "offloading_decision": {
-            "tasks_total_number": len(problem.cloud_nodes + problem.fog_nodes),
-            "tasks_number_to_offload": len(tasks_to_shift),
-            "tasks_to_offload": tasks_to_shift,
-            "tasks_to_offload_details": tasks_to_shift_details,
+            "nodes_total_number": len(problem.cloud_nodes + problem.fog_nodes),
+            "nodes_number_to_offload": len(nodes_to_shift),
+            "nodes_to_offload": nodes_to_shift,
+            "nodes_to_offload_details": nodes_to_shift_details,
         },
         "offloading_debug": problem.nodes_results,
     }

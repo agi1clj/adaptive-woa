@@ -16,9 +16,9 @@ fog:
     cpu_ghz_range: [30, 50]
     memory_gb_range: [8, 32]
   links:
-    latency_ms_range: [40, 100]
+    latency_ms_range: [50, 100]
     bandwidth_mbps_range: [1, 10]
-    distance_km_range: [200, 1000]
+    distance_km_range: [500, 1000]
 
 edge:
   number: 70

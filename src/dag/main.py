@@ -18,11 +18,14 @@ def set_node_properties(dag):
         node_data = dag.nodes[node]
         node_type = node_data["type"]
         comp_req = node_data["computational_requirements"]
+        location = node_data["location"]
         properties[node] = (
             f"{node}, Type: {node_type}, Region: {node_data['region']}, "
             f"CPU: {comp_req['cpu_ghz']:.2f} GHz, "
             f"Memory: {comp_req['memory_gb']:.2f} GB, "
-            f"Ram: {comp_req['ram_gb']:.2f} GB"
+            f"Ram: {comp_req['ram_gb']:.2f} GB, "
+            f"Latitude: {location['latitude']}, "
+            f"Logitude: {location['longitude']}, "
         )
     return properties
 
@@ -40,9 +43,9 @@ def add_nodes_to_graph(g, node_properties):
     for node, properties in node_properties.items():
         node_type = dag.nodes[node]["type"]
         color = {
-            "EdgeTask": "orange",
-            "FogTask": "green",
-            "CloudTask": "blue",
+            "EdgeNode": "orange",
+            "FogNode": "green",
+            "CloudNode": "blue",
         }.get(node_type)
         g.add_node(node, title=properties, color=color)
 

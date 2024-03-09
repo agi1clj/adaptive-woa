@@ -1,4 +1,4 @@
-description: "Small config for shifting tasks within Edge-Fog-Cloud computing"
+description: "Small config for shifting nodes within Edge-Fog-Cloud computing"
 algo:
   threshold_comp_euclidean_dist: 10
   threshold_rtt: 90
